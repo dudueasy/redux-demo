@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "main": "src/js/client.js",
+  "main": "./src/js/client.js",
   "dependencies": {
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start src/js/client.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
