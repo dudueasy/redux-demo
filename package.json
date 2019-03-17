@@ -44,6 +44,8 @@
     "react-app-polyfill": "^0.1.3",
     "react-dev-utils": "^6.0.3",
     "react-dom": "16.8.3",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
@@ -57,7 +59,8 @@
   "devDependencies": {
     "@babel/plugin-syntax-json-strings": "^7.2.0",
     "@babel/plugin-transform-react-jsx": "^7.3.0",
-    "@babel/plugin-transform-react-jsx-source": "^7.2.0"
+    "@babel/plugin-transform-react-jsx-source": "^7.2.0",
+    "redux-devtools": "^3.5.0"
   },
   "scripts": {
     "start": "node scripts/start.js src/js/client.js",
