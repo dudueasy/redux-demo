@@ -1,45 +1,53 @@
 import {applyMiddleware, createStore} from 'redux';
+import axios from "axios";
+import logger from "redux-logger";
+import thunk from "redux-thunk";
 
+const initialState = {
+  fetching: false,
+  fetched: false,
+  users: [],
+  error: null,
+};
 
 const reducer = (state, action) => {
-  if (action.type === "E") {
-    throw Error('AHHHHh');
+  switch (action.type) {
+    case "FETCH_USERS_START":
+      state = {...state, fetching: true};
+      break;
+    case "RECEIVE_USERS":
+      state = {...state, fetching: false, fetched: true, users: action.payload};
+      break;
+
+    case "FETCH_USERS_ERROR":
+      state = {...state, fetching: false, error: action.payload};
+      break;
   }
+
   return state;
 };
 
-// define a middleware function
 
-// a middleware function receive store
-// and return a function with next middleware's dispatch function as argument
-// and then return return a function of action
-// signature of a middleware function ({ getState, dispatch }) => next => action.
+const middleware = applyMiddleware(thunk, logger);
+const store = createStore(reducer, initialState, middleware);
 
 
-const logger = (store) => (next) => (action) => {
-  console.log('action fired', action);
-  next(action);
-};
 
-const error = (store) => (next) => (action) => {
-  try {
-    next(action);
-  } catch (e) {
-    console.log("AHHHHH! ", e);
-  }
-};
+// 派发一个 thunk action creator (function)
+store.dispatch((dispatch, getState) => {
+  dispatch({type: "FETCH_USERS_START"});
 
-const middleware = applyMiddleware(logger, error);
+  console.log(`currentState:`, getState());
 
-const store = createStore(reducer, 1, middleware);
+  // do something async
+  axios.get('http://rest.learncode.academy/api/wstern/users')
+    .then(response =>
 
-let next = store.dispatch;
+      dispatch({type: "RECEIVE_USERS", payload: [{name: 'Apolo'}]}),
+    ).catch(e =>
 
+    dispatch({type: "FETCH_USERS_ERROR", payload: e}),
+  );
 
-store.subscribe(() => {
-  console.log("store changed to be: ", store.getState());
 });
 
-store.dispatch({type: "CHANGE_NAME", payload: "Will"});
-store.dispatch({type: "E", payload: "20"});
-store.dispatch({type: "CHANGE_AGE", payload: "21"});
