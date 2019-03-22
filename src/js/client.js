@@ -1,46 +1,45 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import Layout from "./components/Layout";
-//
-// const app = document.getElementById("root");
-//
-// ReactDOM.render(<Layout />, app);
+import {applyMiddleware, createStore} from 'redux';
 
-import {combineReducers, createStore} from 'redux';
 
-// receive state.user as it's state argument
-const userReducer = (state = {}, action) => {
-  switch (action.type) {
-    case "CHANGE_NAME":
-      state = {...state, name: action.payload};
-      break;
-
-    case "CHANGE_AGE":
-      state = {...state, age: action.payload};
-      break;
+const reducer = (state, action) => {
+  if (action.type === "E") {
+    throw Error('AHHHHh');
   }
-
   return state;
 };
 
-// receive state.tweet as it's state argument
-const tweetReducer = (state = [], action) => {
-  return state;
+// define a middleware function
+
+// a middleware function receive store
+// and return a function with next middleware's dispatch function as argument
+// and then return return a function of action
+// signature of a middleware function ({ getState, dispatch }) => next => action.
+
+
+const logger = (store) => (next) => (action) => {
+  console.log('action fired', action);
+  next(action);
 };
 
+const error = (store) => (next) => (action) => {
+  try {
+    next(action);
+  } catch (e) {
+    console.log("AHHHHH! ", e);
+  }
+};
 
-const reducers = combineReducers({
-  user: userReducer,
-  tweet: tweetReducer,
-});
+const middleware = applyMiddleware(logger, error);
 
+const store = createStore(reducer, 1, middleware);
 
-const store = createStore(reducers);
+let next = store.dispatch;
+
 
 store.subscribe(() => {
   console.log("store changed to be: ", store.getState());
 });
 
 store.dispatch({type: "CHANGE_NAME", payload: "Will"});
-store.dispatch({type: "CHANGE_AGE", payload: "20"});
+store.dispatch({type: "E", payload: "20"});
 store.dispatch({type: "CHANGE_AGE", payload: "21"});
