@@ -11,12 +11,12 @@
 ### master  
 一个完整 react & redux 使用示例
 
-### redux-middleware-demo
+### [redux-middleware-demo](https://github.com/dudueasy/redux-demo/tree/redux-middleware-demo)
 一个基础的 redux 中间件的使用示例, 
 展示了 middleware 能够如何去影响和改变 action 和 dispatch.
 
-### redux-promise-middleware-demo
+### [redux-promise-middleware-demo](https://github.com/dudueasy/redux-demo/tree/redux-promise-middleware-demo)
 展示了如何使用 redux-promise-middleware 并编写相应的 action creator.
 
-### redux-thunk-demo
+### [redux-thunk-demo](https://github.com/dudueasy/redux-demo/tree/redux-thunk-demo)
 展示如何使用 redux-thunk 中间件并编写 thunk action creator.
